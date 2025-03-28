@@ -33,8 +33,8 @@ navigation:
     url: cli/extra
   - title: BashCrawl
     url: https://gitlab.com/slackermedia/bashcrawl
-  - title: Challenge & Homework Solutions
-    url: cli/solutions
+  # - title: Challenge & Homework Solutions
+  #   url: cli/solutions
 
   - heading: Software Installation
   - title: Installation using make and cmake
