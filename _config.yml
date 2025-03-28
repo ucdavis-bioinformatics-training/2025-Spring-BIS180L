@@ -6,21 +6,21 @@ navigation:
   - title: Home
     url: /
 
-  - heading: Introduction
-  - title: Introduction to the Workshop and the Core
-    url: base/welcome
-  - title: Schedule
-    url: base/schedule
+  # - heading: Introduction
+  # - title: Introduction to the Workshop and the Core
+  #   url: base/welcome
+  # - title: Schedule
+  #   url: base/schedule
 
-  - heading: Support
-  - title: Slack
-    url: base/slack
-  - title: Zoom
-    url: base/zoom
-  - title: Cheat Sheets
-    url: base/cheatSheetIndex
-  - title: Windows 10/11 and Mac installation
-    url: base/windows_and_mac
+  # - heading: Support
+  # - title: Slack
+  #   url: base/slack
+  # - title: Zoom
+  #   url: base/zoom
+  # - title: Cheat Sheets
+  #   url: base/cheatSheetIndex
+  # - title: Windows 10/11 and Mac installation
+  #   url: base/windows_and_mac
 
   - heading: CLI
   - title: Introduction to the Command Line 1
@@ -42,8 +42,8 @@ navigation:
   - title: Conda
     url: cli/conda
 
-  - heading: ETC
-  - title: Github page
-    url: https://github.com/ucdavis-bioinformatics-training/2024-June-Introduction-to-the-Command-Line-for-Bioinformatics
-  - title: Biocore website
-    url: http://bioinformatics.ucdavis.edu
+  # - heading: ETC
+  # - title: Github page
+  #   url: https://github.com/ucdavis-bioinformatics-training/2024-June-Introduction-to-the-Command-Line-for-Bioinformatics
+  # - title: Biocore website
+  #   url: http://bioinformatics.ucdavis.edu
