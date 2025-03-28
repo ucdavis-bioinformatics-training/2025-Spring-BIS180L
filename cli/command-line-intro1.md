@@ -303,7 +303,7 @@ You can think of paths like addresses. You can tell your friend how to go to a p
 
 **absolute** (start at root, take steps)
 
-    cd /usr/lib/X11 # windows and linux
+    cd /usr/lib/X11
     pwd
 
 Now, because it can be a real pain to type out, or remember these long paths, we need to discuss ...
