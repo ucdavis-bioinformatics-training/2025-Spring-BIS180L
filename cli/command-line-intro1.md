@@ -181,9 +181,6 @@ And finally adding color (white for regular files, blue for directories, turquoi
 
     ls -ltrha --color /usr/bin # single letter (smushed) vs word options (Linux)
     
-**OR**
-
-    ls -ltrhaG /usr/bin # (MacOS)
 
 <img src="figures/ls6.png" alt="ls6" width="800px"/>
 
@@ -301,14 +298,12 @@ You can think of paths like addresses. You can tell your friend how to go to a p
 
 **relative** (start here, take one step up, then down through lib and gcc)
 
-    cd ../lib/X11 # windows and linux do this one
-    cd ../lib/system # macs do this one
+    cd ../lib/X11 
     pwd
 
 **absolute** (start at root, take steps)
 
     cd /usr/lib/X11 # windows and linux
-    cd /usr/lib/system # macs
     pwd
 
 Now, because it can be a real pain to type out, or remember these long paths, we need to discuss ...
