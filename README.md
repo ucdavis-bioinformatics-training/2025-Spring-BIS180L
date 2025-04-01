@@ -16,11 +16,11 @@ BIS180L is normally taught by Dr. Julin Maloof, but Dr. Maloof is on sabbatical 
 
 ## Discord
 
-The class has a Discord Channel. The instructors monitor the Discord channel, so if you have a question outside of classroom hours, this is a good place to ask. Please join the Discord server here: (https://discord.gg/QTsBfMNp75)
+The class has a Discord Channel. The instructors monitor the Discord channel, so if you have a question outside of classroom hours, this is a good place to ask. Please join the Discord server here: <https://discord.gg/QTsBfMNp75>
 
 ## Office Hours
 
-You can schedule a 30 min session with the professor via Calendly. (https://calendly.com/iankorf/zoom)
+You can schedule a 30 min session with the professor via Calendly. <https://calendly.com/iankorf/zoom>
 
 ## Grading
 
