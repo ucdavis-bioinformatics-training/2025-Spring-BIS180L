@@ -32,7 +32,8 @@ Each unit ends with a graded written assignment. The grade depends on several fa
 * Togetherness - citizenship within the class (you are expected to come to class, interact with people, and collaborate with your lab partner)
 
 There is no final exam for the course because you are graded on assignments on a regular basis.
-Content
+
+## Content
 
 * Introduction to the command line
 * Introduction to R
