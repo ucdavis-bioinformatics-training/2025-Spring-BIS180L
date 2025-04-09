@@ -42,6 +42,18 @@ navigation:
   - title: Conda
     url: cli/conda
 
+  - heading: Introduction to R
+  - title: Introduction to R Day 1
+    url: R/Intro2R_day1
+  - title: Introduction to R Day 2
+    url: R/Intro2R_day2
+  - title: Introduction to R Day 3
+    url: R/Intro2R_day3
+
+  # - title: Challenge solutions
+  #   url: R/challenge_solutions
+
+
   # - heading: ETC
   # - title: Github page
   #   url: https://github.com/ucdavis-bioinformatics-training/2024-June-Introduction-to-the-Command-Line-for-Bioinformatics
