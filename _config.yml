@@ -50,9 +50,13 @@ navigation:
   - title: Introduction to R Day 3
     url: R/Intro2R_day3
 
+  - heading: Alignment
+  - title: Local Alignment
+  - url: alignment/instructions
+
+
   # - title: Challenge solutions
   #   url: R/challenge_solutions
-
 
   # - heading: ETC
   # - title: Github page
