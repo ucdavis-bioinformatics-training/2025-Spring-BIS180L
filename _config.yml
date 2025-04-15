@@ -52,7 +52,7 @@ navigation:
 
   - heading: Alignment
   - title: Local Alignment
-  - url: alignment/instructions
+    url: alignment/instructions
 
 
   # - title: Challenge solutions
