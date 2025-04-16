@@ -54,6 +54,26 @@ navigation:
   #   url: R/challenge_solutions
 
 
+  - heading: Python
+  - title: Intro
+    url: python/python1
+  - title: Basic Data Types
+    url: python/python2
+  - title: Flow Control, Functions, Files, Errors
+    url: python/python3
+  - title: Writing Programs
+    url: python/python4
+  - title: Biopython and bamnostic/pysam
+    url: python/python5
+  - title: Next Steps
+    url: python/nextsteps
+  - title: Bioinformatics File Types
+    url: python/filetypes
+
+  # - title: Exercise Solutions
+  #   url: python/solutions
+
+
   # - heading: ETC
   # - title: Github page
   #   url: https://github.com/ucdavis-bioinformatics-training/2024-June-Introduction-to-the-Command-Line-for-Bioinformatics
