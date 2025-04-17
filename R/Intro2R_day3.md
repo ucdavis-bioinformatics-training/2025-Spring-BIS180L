@@ -1216,7 +1216,7 @@ legend(&quot;topright&quot;, fill=cols, legend=levels(dd$Species))</code></pre>
 <h2>VISUALIZATION CHALLENGE</h2>
 <p>Download the gapminder dataset to your Rstudio session using the
 following URL:</p>
-<p><a href="https://github.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/raw/main/R/gapminder.csv" class="uri">https://github.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/raw/main/R/gapminder.csv</a></p>
+<p><a href="https://github.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/raw/refs/heads/master/R/gapminder.csv" class="uri">https://github.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/raw/refs/heads/master/R/gapminder.csv</a></p>
 <p>Take a look at the dataset. Subset the data to only look at rows from
 1982. Then make a scatterplot of gdp vs life exp (using the plot
 function) of the subset, adding x and y labels. Find out how to log
