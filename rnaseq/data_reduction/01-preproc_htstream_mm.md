@@ -193,7 +193,6 @@ When building a new pipeline, it is almost always a good idea to use a small sub
 
     ```bash
     cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example/HTS_testing
-    module load htstream
     hts_Stats --help
     ```
 
@@ -770,7 +769,7 @@ From [Illumina 2-Channel SBS Technology](https://www.illumina.com/science/techno
 
 Finally lets use [MultiQC](https://multiqc.info/) to generate a summary of our output. Currently MultiQC support for HTStream is in development by Bradley Jenner, and has not been included in the official MultiQC package. If you'd like to try it on your own data, you can find a copy here [https://github.com/s4hts/MultiQC](https://github.com/s4hts/MultiQC).
 
-### First, install a devolpment MultiQC using conda
+### First, install a development MultiQC using conda
 
 ```bash
 cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example
@@ -792,6 +791,8 @@ cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example
 mkdir -p 02-HTS_multiqc_report
 multiqc -i HTSMultiQC-cleaning-report -o 02-HTS_multiqc_report ./01-HTS_Preproc
 ```
+
+Take a look at the report in a web browser.
 
 ### <font color='red'> End Group Exercise 3 </font>
 
