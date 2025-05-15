@@ -61,6 +61,13 @@
                   <th style="font-size:22px; color:#CFB53B">{{ nav.heading }}</th>
                   {% continue %}
                 {% endif %}
+
+                {% if nav.subheading %}
+                  <th style="font-size:11px; color:#CFB53B">{{ nav.subheading }}</th>
+                  {% continue %}
+                {% endif %}
+
+
                 {% if nav.url contains "://" %}
                   <tr id={{nav.title}} ><th><a href="{{ nav.url }}">{{ nav.title }}</a></th></tr>
                 {% else %}
