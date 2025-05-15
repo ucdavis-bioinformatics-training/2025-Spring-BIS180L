@@ -73,6 +73,26 @@ navigation:
     url: rnaseq/data_reduction/02-alignment-indexref_mm
   - title: Alignment with Star
     url: rnaseq/data_reduction/02-alignment_mm
+  - title: Generating counts tables
+    url: rnaseq/data_reduction/03-counts_mm
+  # - title: Alignment/Counts with Salmon (Extra)
+  #   url: rnaseq/data_reduction/02-salmon_mm
+  # - title: 3' TagSeq
+  #   url: rnaseq/data_reduction/02-tagseq_mm
+
+
+  - subheading: Data Analysis
+  - title: Prepare R for data analysis
+    url: rnaseq/data_analysis/de_analysis_prepare_mm
+  - title: Annotation from BioMart
+    url: rnaseq/data_analysis/annotation_mm
+  - title: Differential Expression Analysis
+    url: rnaseq/data_analysis/DE_Analysis_mm_with_quizzes
+  - title: Pathway Analysis
+    url: rnaseq/data_analysis/enrichment_mm_with_quizzes
+  - title: Comparison between STAR and Salmon
+    url: rnaseq/data_analysis/compare_star_salmon_mm
+
 
 
   # - heading: ETC

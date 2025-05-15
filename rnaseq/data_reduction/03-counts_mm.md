@@ -2,13 +2,6 @@
 
 This document assumes [alignment](./alignment.md) has been completed.
 
-**IF for some reason it didn't finish, is corrupted or you missed the session, you can copy over a completed copy.**
-
-```bash
-cp -r /share/biocore/workshops/2022_mRNASeq/02-STAR_alignment /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
-cp  /share/biocore/workshops/2022_mRNASeq/summary_star_alignments.txt /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
-```
-
 In this section, we will collate all of the count data into one file for analysis in R.
 
 
@@ -19,7 +12,7 @@ In this section, we will collate all of the count data into one file for analysi
 1. First lets make sure we are where we are supposed to be.
 
     ```bash
-    cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
+    cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example
     ```
 
 1. First, go back to your 02-STAR_alignment directory. Let's use a wildcard to list all of the counts files from all of the STAR alignment directories:
@@ -121,17 +114,6 @@ In this section, we will collate all of the count data into one file for analysi
     </div>
 
     And now you have a raw counts file that has a count for every gene, per sample. You will use this file for the next step, which is analysis in R.
-
-1. The alignment exercise and the above exercise to generate the counts table used a subset of the original data. But we are goint to transfer the counts table generated using the full data set and samples.txt to your computer using scp or winSCP, or copy/paste from cat [sometimes doesn't work],  
-
-    In Mac/Linux, users can use scp. Windows users use WinSCP. In a new shell session on my laptop. **NOT logged into tadpole. Replace my [your_username] with your username.**
-
-    ```bash
-    mkdir -p ~/rnaseq_workshop
-    cd ~/rnaseq_workshop
-    scp [your_username]@tadpole.genomecenter.ucdavis.edu:/share/workshop/mrnaseq_workshop/Data/rnaseq_workshop_counts.txt .
-    scp [your_username]@tadpole.genomecenter.ucdavis.edu:/share/workshop/mrnaseq_workshop/[your_username]/rnaseq_example/samples.txt .
-    ```
 
 
 **Questions**:
