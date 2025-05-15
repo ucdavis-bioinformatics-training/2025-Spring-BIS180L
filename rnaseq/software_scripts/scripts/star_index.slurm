@@ -17,12 +17,8 @@ echo $HOSTNAME
 outpath="References"
 cd ${outpath}
 
-refdir="/quobyte/ikorfgrp/bis180l/mRNAseq/References"
+refdir=""
 FASTA="$refdir/GRCm39.primary_assembly.genome.fa"
-
-#wget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M32/gencode.vM32.primary_assembly.annotation.gtf.gz
-#gunzip gencode.vM32.primary_assembly.annotation.gtf.gz
-#GTF="../gencode.vM32.primary_assembly.annotation.gtf"
 GTF="$refdir/gencode.vM37.basic.annotation.gtf"
 
 mkdir star.overlap100.gencode.M35

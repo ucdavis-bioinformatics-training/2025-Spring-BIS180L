@@ -12,22 +12,6 @@
 ## Initial Setup
 
 *This document assumes [preproc htstream](./preproc_htstream.md) has been completed.*
-To catch up to where we are:
-
-```
-mkdir -p /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
-cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
-mkdir -p References
-
-refcheck=$(egrep "DONE: Genome generation" References/star.overlap100.gencode.M35/Log.out)
-if [[ ! -z $refcheck ]]
-then
-  ln -s /share/workshop/mrnaseq_workshop/jli/rnaseq_example/References/star.overlap100.gencode.M35 References/.
-fi
-
-cp -r /share/workshop/mrnaseq_workshop/jli/rnaseq_example/HTS_testing .
-ln -s /share/workshop/mrnaseq_workshop/jli/rnaseq_example/01-HTS_Preproc .
-```
 
 ---
 ## Mapping vs Assembly
@@ -179,32 +163,24 @@ What does stranded and unstranded mean? Which is better and why? [Stranded vs Un
 1. We are now ready to try an alignment:
 
     ```bash
-    cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
+    cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example/HTS_testing
     ```
 
     and let's run STAR (via srun) on the pair of streamed test files we created earlier:
 
     ```bash
-    srun --time=15:00:00 -n 8 --mem=32g --reservation=rnaworkshop --account=workshop --pty /bin/bash
+    srun --time=15:00:00 -n 8 --mem=32g --account=publicgrp --partition=low --pty /bin/bash
     ```
 
-    Once you've been given an interactive session we can run STAR. You can ignore the two warnings/errors and you know your on a cluster node because your server will change. Here you see I'm on tadpole, then after the srun command is successful, I am now on drove-13.
-
-    <div class="output">jli@ganesh:/share/workshop/mrnaseq_workshop/jli/rnaseq_example/HTS_testing$ srun --time=15:00:00 -n 8 --mem=32g --reservation=rnaworkshop --account=workshop --pty /bin/bash
-    srun: error: spank-auks: cred forwarding failed : auks api : connection failed
-    srun: job 49856359 queued and waiting for resources
-    srun: job 49856359 has been allocated resources
-    bash: /home/jli/.bashrc: Permission denied
-    jli@fleet-29:/share/workshop/mrnaseq_workshop/jli/rnaseq_example/HTS_testing$
-    </div>
+    Once you've been given an interactive session we can run STAR.
 
 1. Then run the star commands
 
     ```bash
-    module load star/2.7.11b
+    module load star/2.7.11a
     STAR \
     --runThreadN 12 \
-       --genomeDir /share/workshop/mrnaseq_workshop/Data/star.overlap100.gencode.M35 \
+       --genomeDir /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example/References/star.overlap100.gencode.M35 \
        --outSAMtype BAM SortedByCoordinate \
        --quantMode GeneCounts \
        --outFileNamePrefix mouse_110_WT_C.htstream_ \
@@ -214,12 +190,7 @@ What does stranded and unstranded mean? Which is better and why? [Stranded vs Un
 
     In the command, we are telling star to count reads on a gene level ('--quantMode GeneCounts'), the prefix for all the output files will be mouse_110_WT_C.htstream_, the command to unzip the files (zcat), and finally, the input file pair.
 
-    Once finished please 'exit' the srun session. You'll know you were successful when your back on tadpole
-
-    <div class="output">jli@drove-13:/share/workshop/jli/rnaseq_example/HTS_testing$ exit
-    exit
-    jli@tadpole:/share/workshop/jli/rnaseq_example/HTS_testing$
-    </div>
+    Once finished please 'exit' the srun session.
 
 ###  Now let's take a look at an alignment in IGV.
 
@@ -234,32 +205,11 @@ What does stranded and unstranded mean? Which is better and why? [Stranded vs Un
     We need to index the BAM file:
 
     ```bash
-    cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
+    cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example/HTS_testing
     samtools index mouse_110_WT_C.htstream_Aligned.sortedByCoord.out.bam
     ```
 
-    **IF for some reason it didn't finish, is corrupted or you missed the session, you can copy over a completed copy.**
-
-    ```bash
-    cp /share/biocore/workshops/2023-June-mRNASeq/HTS_testing/mouse_110_WT_C.htstream_Aligned.sortedByCoord.out.bam* /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
-    ```
-
-2. Transfer mouse_110_WT_C.htstream_Aligned.sortedByCoord.out.bam and mouse_110_WT_C.htstream_Aligned.sortedByCoord.out.bam.bai (the index file) to your computer using scp,FileZilla or winSCP.
-
-    Windows users can use WinSCP or FileZilla, both of which are GUI based.
-
-    Mac/Linux users can use scp. In a new shell session on my laptop. **NOT logged into tadpole. Replace [your_username] with your username.**
-
-    ```bash
-    mkdir ~/rnaseq_workshop
-    cd ~/rnaseq_workshop
-    scp [your_username]@tadpole.genomecenter.ucdavis.edu:/share/workshop/mrnaseq_workshop/[your_username]/rnaseq_example/HTS_testing/mouse_110_WT_C.htstream_Aligned.sortedByCoord.out.bam* .
-    ```
-
-    Its ok if the mkdir command fails ("File exists") because we aleady created the directory earlier.
-
-
-1. Now we are ready to use IGV.
+1. Now we are ready to use IGV. Open a browser inside your Hive Desktop.
 
     Go to the [IGV page at the Broad Institute](http://software.broadinstitute.org/software/igv/).
 
@@ -289,7 +239,7 @@ What does stranded and unstranded mean? Which is better and why? [Stranded vs Un
 
     <img src="alignment_mm_figures/index_igv7.png" alt="index_igv7" width="80%" style="border:5px solid #ADD8E6;"/>
 
-1. Lets take a look at the alignment associated with the gene __Fn1__, and if for some reason it doesn't find HBB (web IGV can be fickle) go to position __chr1:71,610,633-71,628,073__. If you don't see any reads, this likely means your in the wrong genome, double check that it says **mm39** in the top left.
+1. Lets take a look at the alignment associated with the gene __Fn1__, and if for some reason it doesn't find Fn1 (web IGV can be fickle) go to position __chr1:71,610,633-71,628,073__. If you don't see any reads, this likely means your in the wrong genome, double check that it says **mm39** in the top left.
 
     <img src="alignment_mm_figures/index_igv8.png" alt="index_igv8" width="80%" style="border:5px solid #ADD8E6;"/>
 
@@ -330,56 +280,56 @@ What does stranded and unstranded mean? Which is better and why? [Stranded vs Un
 1. We can now run STAR across all samples on the real data using a SLURM script, [star.slurm](../scripts/star.slurm), that we should take a look at now.
 
     ```bash
-    cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example  # We'll run this from the main directory
-    wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2024-June-RNA-Seq-Analysis/master/software_scripts/scripts/star.slurm
+    cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example  # We'll run this from the main directory
+    wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/master/rnaseq/software_scripts/scripts/star.slurm
     less star.slurm
     ```
 
     <pre class="prettyprint"><code class="language-py" style="background-color:333333">#!/bin/bash
 
-    #SBATCH --job-name=star # Job name
-    #SBATCH --nodes=1
-    #SBATCH --ntasks=8
-    #SBATCH --time=60
-    #SBATCH --mem=32000 # Memory pool for all cores (see also --mem-per-cpu)
-    #SBATCH --partition=production
-    #SBATCH --reservation=rnaworkshop
-    #SBATCH --account=workshop
-    #SBATCH --array=1-22
-    #SBATCH --output=slurmout/star_%A_%a.out # File to which STDOUT will be written
-    #SBATCH --error=slurmout/star_%A_%a.err # File to which STDERR will be written
+#SBATCH --job-name=star # Job name
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8
+#SBATCH --account=publicgrp
+#SBATCH --partition=low
+#SBATCH --time=60
+#SBATCH --mem=32000 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --array=1-22
+#SBATCH --output=slurmout/star_%A_%a.out # File to which STDOUT will be written
+#SBATCH --error=slurmout/star_%A_%a.err # File to which STDERR will be written
 
-    start=`date +%s`
-    echo $HOSTNAME
-    echo "My SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
+start=`date +%s`
+echo $HOSTNAME
+echo "My SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
 
-    sample=`sed "${SLURM_ARRAY_TASK_ID}q;d" samples.txt`
-    REF="/share/workshop/mrnaseq_workshop/Data/star.overlap100.gencode.M35"
+sample=`sed "${SLURM_ARRAY_TASK_ID}q;d" samples.txt`
+REF="/quobyte/ikorfgrp/bis180l/mRNAseq/References/star.overlap100.gencode.M35"
 
-    outpath='02-STAR_alignment'
-    [[ -d ${outpath} ]] || mkdir ${outpath}
-    [[ -d ${outpath}/${sample} ]] || mkdir ${outpath}/${sample}
+outpath='02-STAR_alignment'
+[[ -d ${outpath} ]] || mkdir ${outpath}
+[[ -d ${outpath}/${sample} ]] || mkdir ${outpath}/${sample}
 
-    echo "SAMPLE: ${sample}"
+echo "SAMPLE: ${sample}"
 
-    module load star
+module load star/2.7.11a
 
-    call="STAR
-         --runThreadN ${SLURM_NTASKS} \
-         --genomeDir $REF \
-         --outSAMtype BAM SortedByCoordinate \
-         --readFilesCommand zcat \
-         --readFilesIn 01-HTS_Preproc/${sample}/${sample}_R1.fastq.gz 01-HTS_Preproc/${sample}/${sample}_R2.fastq.gz \
-         --quantMode GeneCounts \
-         --outFileNamePrefix ${outpath}/${sample}/${sample}_ \
-         > ${outpath}/${sample}/${sample}-STAR.stdout 2> ${outpath}/${sample}/${sample}-STAR.stderr"
+call="STAR
+     --runThreadN 8 \
+     --genomeDir $REF \
+     --outSAMtype BAM SortedByCoordinate \
+     --readFilesCommand zcat \
+     --readFilesIn 01-HTS_Preproc/${sample}/${sample}_R1.fastq.gz 01-HTS_Preproc/${sample}/${sample}_R2.fastq.gz \
+     --quantMode GeneCounts \
+     --outFileNamePrefix ${outpath}/${sample}/${sample}_ \
+     > ${outpath}/${sample}/${sample}-STAR.stdout 2> ${outpath}/${sample}/${sample}-STAR.stderr"
 
-    echo $call
-    eval $call
+echo $call
+eval $call
 
-    end=`date +%s`
-    runtime=$((end-start))
-    echo $runtime
+end=`date +%s`
+runtime=$((end-start))
+echo $runtime
     </code></pre>
 
 
@@ -392,7 +342,7 @@ When you are done, type "q" to exit.
     sbatch star.slurm  # moment of truth!
     ```
 
-    We can watch the progress of our task array using the 'squeue' command. Takes about 30 minutes to process each sample.
+    We can watch the progress of our task array using the 'squeue' command. Takes about 2 minutes to process each sample.
 
     ```sbatch
     squeue -u $USER 
@@ -407,8 +357,8 @@ When you are done, type "q" to exit.
     Use a script of ours, [star_stats.sh](../software_scripts/scripts/star_stats.sh) to collect the alignment stats. Don't worry about the script's contents at the moment; you'll use very similar commands to create a counts table in the next section. For now:
 
     ```bash
-    cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example # We'll run this from the main directory
-    wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2024-June-RNA-Seq-Analysis/master/software_scripts/scripts/star_stats.sh
+    cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example # We'll run this from the main directory
+    wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/master/rnaseq/software_scripts/scripts/star_stats.sh
     bash star_stats.sh
     ```
 
@@ -435,22 +385,11 @@ When you are done, type "q" to exit.
     </code></pre>
 
 
-2. Transfer `summary_star_alignments.txt` to your computer using scp or winSCP, or copy/paste from cat [sometimes doesn't work],  
-
-    In Mac/Linux, users can use scp. Windows users can use WinSCP. In a new shell session on my laptop. **NOT logged into tadpole. Replace my [your_username] with your username.**
-
-    ```bash
-    mkdir -p ~/rnaseq_workshop
-    cd ~/rnaseq_workshop
-    scp [your_username]@tadpole.genomecenter.ucdavis.edu:/share/workshop/mrnaseq_workshop/[your_username]/rnaseq_example/summary_star_alignments.txt .
-    ```
-
-
 **Questions:**
 1. Look at the script `star.slurm`. What does the `array=1-22` mean, why is it used, and what is the usage of it in the script itself?
-2. Look through the files in an output directory and check out what is present and discuss what each of them mean. (for example: `cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/02-STAR_alignment/mouse_110_WT_C` )
+2. Look through the files in an output directory and check out what is present and discuss what each of them mean. (for example: `cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example/02-STAR_alignment/mouse_110_WT_C` )
 3. Come up with a brief command you might use to check that all of the sample alignments using STAR have a reasonable output and/or did not produce any errors.
-4. Open `summary_star_alignments.txt` in excel (or excel like application), and review. The table that this script creates ("summary_star_alignments.txt") can be pulled to your laptop via 'scp', or WinSCP, etc., and imported into a spreadsheet. Are all samples behaving similarly? Discuss ...
+4. Open `summary_star_alignments.txt` in excel (or excel like application), and review. Are all samples behaving similarly? Discuss ...
 5. If time, find some other regions/genes with high expression using IGV with your group. (Looking at genes the paper references is a great place to start)
 
 ### <font color='red'> Stop Group Exercise </font>
