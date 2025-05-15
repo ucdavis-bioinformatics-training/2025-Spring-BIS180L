@@ -354,34 +354,25 @@ When you are done, type "q" to exit.
 
 1. Once your jobs have finished successfully, check the error and out logs like we did in the previous exercise.
 
-    Use a script of ours, [star_stats.sh](../software_scripts/scripts/star_stats.sh) to collect the alignment stats. Don't worry about the script's contents at the moment; you'll use very similar commands to create a counts table in the next section. For now:
+    Use a script of ours, [star_stats.R](../software_scripts/scripts/star_stats.R) to collect the alignment stats.
 
     ```bash
     cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example # We'll run this from the main directory
-    wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/master/rnaseq/software_scripts/scripts/star_stats.sh
-    bash star_stats.sh
+    wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/master/rnaseq/software_scripts/scripts/star_stats.R
+    module load R
+    Rscript star_stats.R
     ```
 
-    <pre class="prettyprint"><code class="language-py" style="background-color:333333">#!/bin/bash
-
-    echo -en "sample_names" > names.txt
-    echo -en "total_in_feature\t" > totals.txt
-    cat 02-STAR_alignment/*/*ReadsPerGene.out.tab | head -4 | cut -f1 > stats.txt
-    cat samples.txt | while read sample; do
-        echo ${sample}
-        echo -en "\t${sample}" >> names.txt
-        head -4 02-STAR_alignment/${sample}/${sample}_ReadsPerGene.out.tab | cut -f4 > temp1
-        paste stats.txt temp1 > temp2
-        mv temp2 stats.txt
-        tail -n +5 02-STAR_alignment/${sample}/${sample}_ReadsPerGene.out.tab | cut -f4 | \
-            perl -ne '$tot+=$_ }{ print "$tot\t"' >> totals.txt
-    done
-    echo -en "\n" >> names.txt
-    cat names.txt stats.txt totals.txt > temp1
-    mv temp1 summary_star_alignments.txt
-    rm stats.txt
-    rm names.txt
-    rm totals.txt
+    <pre class="prettyprint"><code class="language-r" style="background-color:333333">
+files = Sys.glob("02-STAR_alignment/*/*_ReadsPerGene.out.tab")
+stats = t(as.data.frame(lapply(files, function(x){read.delim(x,header=F,nrows=4)[,4]})))
+samples=read.delim("samples.txt",header=F)
+rownames(stats) = samples[,1]
+cn = lapply(files, function(x){read.delim(x,header=F,nrows=4)})[[1]][,1]
+colnames(stats) = cn
+stats = cbind(stats,total_in_feature=rowSums(stats))
+stats = cbind(sample=rownames(stats), stats)
+write.table(stats, file="summary_star_alignments.txt", col.names=T, row.names=F, quote=F, sep="\t")
     </code></pre>
 
 
