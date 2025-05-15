@@ -780,7 +780,7 @@ conda create -y -n multiqc-dev python=3
 conda activate multiqc-dev
 git clone https://github.com/s4hts/MultiQC.git
 cd MultiQC
-pip install .
+pip3 install .
 ```
 
 ### Then run MultiQC
