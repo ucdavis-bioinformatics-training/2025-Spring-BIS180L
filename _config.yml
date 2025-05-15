@@ -78,7 +78,7 @@ navigation:
 
   - heading: RNA-Seq
 
-  - subheading: Data Reduction
+  - heading: Data Reduction
   - title: Files and Filetypes
     url: rnaseq/data_reduction/filetypes
   - title: Prepare dataset
