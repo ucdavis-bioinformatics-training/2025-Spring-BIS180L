@@ -75,6 +75,22 @@ navigation:
   # - title: Exercise Solutions
   #   url: python/solutions
 
+
+  - heading: RNA-Seq
+
+  - subheading: Data Reduction
+  - title: Files and Filetypes
+    url: rnaseq/data_reduction/filetypes
+  - title: Prepare dataset
+    url: rnaseq/data_reduction/00-project_setup_mm
+  - title: Preprocessing raw data
+    url: rnaseq/data_reduction/01-preproc_htstream_mm
+  - title: Indexing a Genome
+    url: rnaseq/data_reduction/02-alignment-indexref_mm
+  - title: Alignment with Star
+    url: rnaseq/data_reduction/02-alignment_mm
+
+
   # - heading: ETC
   # - title: Github page
   #   url: https://github.com/ucdavis-bioinformatics-training/2024-June-Introduction-to-the-Command-Line-for-Bioinformatics
