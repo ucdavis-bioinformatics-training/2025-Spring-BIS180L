@@ -58,12 +58,12 @@
         <table style="padding-top: 50px">
             {% for nav in site.navigation %}
                 {% if nav.heading %}
-                  <th style="font-size:22px; color:#CFB53B">{{ nav.heading }}</th>
+                  <tr><th style="font-size:22px; color:#CFB53B">{{ nav.heading }}</th></tr>
                   {% continue %}
                 {% endif %}
 
                 {% if nav.subheading %}
-                  <th style="font-size:22px; color:#CFB53B">{{ nav.subheading }}</th>
+                  <tr><th style="font-size:22px; color:#CFB53B">{{ nav.subheading }}</th></tr>
                   {% continue %}
                 {% endif %}
 
