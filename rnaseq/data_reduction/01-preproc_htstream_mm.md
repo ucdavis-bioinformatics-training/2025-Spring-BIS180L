@@ -3,7 +3,7 @@
 This document assumes [project_setup](./00-project_setup_mm.md) has been completed.
 
 ```bash
-cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
+cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example
 ```
 
 ## Why Preprocess Reads
@@ -146,6 +146,18 @@ If you encounter any bugs or have suggestions for improvement, please post them 
 
 ### <font color='red'> Start Group Exercise 1: </font>
 
+## Install HTStream
+
+We will use conda to install HTStream for ourselves.
+
+```bash
+cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example
+module load conda
+conda search htstream
+conda create -y -n htstream-1.4.1 htstream=1.4.1
+conda activate htstream-1.4.1
+```
+
 ## Running HTStream
 
 Let's run the first step of our HTStream preprocessing pipeline, which is always to gather basic stats on the read files. For now, we're only going to run one sample through the pipeline.
@@ -156,7 +168,7 @@ When building a new pipeline, it is almost always a good idea to use a small sub
 1. Let's start by first taking a small subsample of reads, so that our trial run through the pipeline goes really quickly.
 
     ```bash
-    cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
+    cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example
     mkdir HTS_testing
     cd HTS_testing
     pwd
@@ -180,7 +192,7 @@ When building a new pipeline, it is almost always a good idea to use a small sub
 1. Now we'll run our first preprocessing step ```hts_Stats```, first loading the module and then looking at help.
 
     ```bash
-    cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
+    cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example/HTS_testing
     module load htstream
     hts_Stats --help
     ```
@@ -294,29 +306,14 @@ We will use these sequences to identify rRNA in our reads, which are from mouse.
 
 Save this file to your computer, and rename it to 'mouse_rrna.fasta'.
 
-Upload your mouse_rrna.fasta file **to the 'References' directory** in your project folder using either **scp** or FileZilla (or equivalent).
-
-Or if you feel like 'cheating', just copy/paste the contents of mouse_rrna.fa using nano into a file named /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/mouse_rrna.fasta
-
-```bash
-nano /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/mouse_rrna.fasta
-```
-
-Paste contents of mouse_rrna.fa and save
-
-
-This is *really* cheating, but if all else fails, download the file as follows:
-```bash
-cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References
-wget https://ucdavis-bioinformatics-training.github.io/2024-June-RNA-Seq-Analysis/data_reduction/mouse_rrna.fasta
-```
+Move your mouse_rrna.fasta file **to the 'References' directory** in your project folder.
 
 ### Using HTStream to count ribosomal rna (not remove, but just to count the occurrences).
 
 1. First, view the help documentation for hts_SeqScreener
 
     ```bash
-    cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
+    cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example/HTS_testing
     hts_SeqScreener -h
     ```
 
@@ -345,7 +342,7 @@ wget https://ucdavis-bioinformatics-training.github.io/2024-June-RNA-Seq-Analysi
 1. Lets try it out. First run hts_Stats and then hts_SeqScreener in a streamed fashion.
 
     ```bash
-    cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
+    cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example/HTS_testing
 
     hts_Stats -1 mouse_110_WT_C.subset_R1.fastq.gz \
               -2 mouse_110_WT_C.subset_R2.fastq.gz \
@@ -474,7 +471,7 @@ P5---Index-Read1primer-------INSERT-------Read2primer--index--P7(rc)
 This sequence is P7(rc): **ATCTCGTATGCCGTCTTCTGCTTG**. It should present in any R1 that contains a full-length adapter sequence. It is easy to search for this sequence using zcat and grep:
 
 ```bash
-cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
+cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example/HTS_testing
 zcat mouse_110_WT_C.subset_R1.fastq.gz | grep TCTCGTATGCCGTCTTCTGCTTG
 ```
 
@@ -523,7 +520,7 @@ Note that the very highly expressed transcript is [Lysozyme 2, ENSMUST0000009216
 --------
 
 ```bash
-cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
+cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example/HTS_testing
 
 hts_Stats -L mouse_110_WT_C_htsStats.json -N "initial stats" \
     -1 mouse_110_WT_C.subset_R1.fastq.gz \
@@ -564,8 +561,8 @@ Note the patterns:
 We can now run the preprocessing routine across all samples on the real data using a SLURM script, [hts_preproc.slurm](../software_scripts/scripts/hts_preproc.slurm), that we should take a look at now.
 
 ```bash
-cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example  # We'll run this from the main directory
-wget https://ucdavis-bioinformatics-training.github.io/2024-June-RNA-Seq-Analysis/software_scripts/scripts/hts_preproc.slurm
+cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example  # We'll run this from the main directory
+wget https://ucdavis-bioinformatics-training.github.io/2025-Spring-BIS180L/rnaseq/software_scripts/scripts/hts_preproc.slurm
 less hts_preproc.slurm
 ```
 
@@ -575,17 +572,16 @@ When you are done, type "q" to exit.
 
 #SBATCH --job-name=htstream # Job name
 #SBATCH --nodes=1
-#SBATCH --ntasks=9
-#SBATCH --time=60
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8
+#SBATCH --account=publicgrp
+#SBATCH --partition=high
+#SBATCH --time=0-1
 #SBATCH --mem=3000 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --partition=production
-#SBATCH --reservation=rnaworkshop
-#SBATCH --account=workshop
 #SBATCH --array=1-22
 #SBATCH --output=slurmout/htstream_%A_%a.out # File to which STDOUT will be written
 #SBATCH --error=slurmout/htstream_%A_%a.err # File to which STDERR will be written
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=myemail@email.com
+
 
 start=`date +%s`
 echo $HOSTNAME
@@ -600,7 +596,9 @@ outpath="01-HTS_Preproc"
 
 echo "SAMPLE: ${sample}"
 
-module load htstream/1.3.3
+module load conda
+conda activate htstream-1.4.1
+
 
 call="hts_Stats -L ${outpath}/${sample}/${sample}.json -N 'initial stats' \
           -1 ${inpath}/${sample}/*R1.fastq.gz \
@@ -630,13 +628,13 @@ echo $runtime
 Double check to make sure that slurmout and 01-HTS_Preproc directories have been created for output, then after looking at the script, let's run it.
 
 ```bash
-cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
+cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example
 mkdir -p slurmout  # -p tells mkdir not to complain if the directory already exists
 mkdir -p 01-HTS_Preproc
 sbatch hts_preproc.slurm  # moment of truth!
 ```
 
-We can watch the progress of our task array using the 'squeue' command. Takes about 30 minutes to process each sample.
+We can watch the progress of our task array using the 'squeue' command. Takes about 2 minutes to process each sample.
 
 ```bash
 squeue -u $USER  # use your username
@@ -676,7 +674,7 @@ The JSON files output by HTStream provide this type of information.
     First check all the "htstream_\*.out" and "htstream_\*.err" files:
 
     ```bash
-    cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
+    cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example
     cat slurmout/htstream_*.out
     ```
 
@@ -707,16 +705,10 @@ The JSON files output by HTStream provide this type of information.
 
     *All of the samples started with the same number of reads. What can you tell from the file sizes about how cleaning went across the samples?*
 
-    **IF for some reason HTStream didn't finish, the files are corrupted or you missed the session, please let one of us know and we will help. You can also copy over the HTStream output.**
-
-    ```bash
-    cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
-    ```
-
 1. Let's take a look at the differences in adapter content between the input and output files. First look at the input file:
 
     ```bash
-    cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
+    cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example
     zless 00-RawData/mouse_110_WT_C/mouse_110_WT_C.R1.fastq.gz
     ```
 
@@ -778,18 +770,28 @@ From [Illumina 2-Channel SBS Technology](https://www.illumina.com/science/techno
 
 Finally lets use [MultiQC](https://multiqc.info/) to generate a summary of our output. Currently MultiQC support for HTStream is in development by Bradley Jenner, and has not been included in the official MultiQC package. If you'd like to try it on your own data, you can find a copy here [https://github.com/s4hts/MultiQC](https://github.com/s4hts/MultiQC).
 
+### First, install a devolpment MultiQC using conda
+
+```bash
+cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example
+mkdir software
+cd software
+module load conda
+conda create -y -n multiqc-dev python=3
+conda activate multiqc-dev
+git clone https://github.com/s4hts/MultiQC.git
+cd MultiQC
+pip install .
+```
+
+### Then run MultiQC
+
 ```bash
 ## Run multiqc to collect statistics and create a report:
-cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
-module load multiqc/htstream.1.13.dev0_beta
+cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example
 mkdir -p 02-HTS_multiqc_report
 multiqc -i HTSMultiQC-cleaning-report -o 02-HTS_multiqc_report ./01-HTS_Preproc
 ```
-
-Transfer HTSMultiQC-cleaning-report_multiqc_report.html to your computer and open it in a web browser.
-
-
-Or in case of emergency, download this copy: [HTSMultiQC-cleaning-report_multiqc_report.html](HTSMultiQC-cleaning-report_multiqc_report.html)
 
 ### <font color='red'> End Group Exercise 3 </font>
 

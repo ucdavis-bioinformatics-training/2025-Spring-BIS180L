@@ -25,7 +25,7 @@ RNA-sequencing of classical and nonclassical monocyte subsets of four healthy do
 
 # Project Setup
 
-Let's set up a project directory for the week, and talk a bit about project philosophy..
+Let's set up a project directory for the week, and talk a bit about project philosophy.
 
 ##  Creating a Project Directory
 
@@ -33,7 +33,7 @@ First, create a directory for you and the example project in the workshop share 
 
 ```bash
 cd
-mkdir -p /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
+mkdir -p /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example
 ```
 
 ## Link raw fastq files
@@ -41,10 +41,10 @@ mkdir -p /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
 1. Next, go into that directory, create a raw data directory (we are going to call this 00-RawData) and cd into that directory. Lets then create symbolic links to the sample directories that contains the raw data.
 
     ```bash
-    cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
+    cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example
     mkdir 00-RawData
     cd 00-RawData/
-    ln -s /share/biocore/workshops/2020_mRNAseq_July/00-RawData/* .
+    ln -s /quobyte/ikorfgrp/bis180l/najoshi/mRNAseq/00-RawData/* .
     ```
 
     This directory now contains a folder for each sample and the fastq files for each sample are in the sample folders.
@@ -61,7 +61,7 @@ mkdir -p /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
 1. Now, take a look at the raw data directory.
 
     ```bash
-    ls /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/00-RawData
+    ls /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example/00-RawData
     ```
 
     You will see a list of the contents of each directory.
@@ -126,7 +126,7 @@ mkdir -p /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
 Now go back to your 'rnaseq_example' directory and create two directories called 'slurmout' and '01-HTS_Preproc':
 
 ```bash
-cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
+cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example
 mkdir References
 mkdir slurmout
 mkdir 01-HTS_Preproc

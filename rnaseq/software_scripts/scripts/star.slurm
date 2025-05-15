@@ -2,12 +2,12 @@
 
 #SBATCH --job-name=star # Job name
 #SBATCH --nodes=1
-#SBATCH --ntasks=8
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8
+#SBATCH --account=publicgrp
+#SBATCH --partition=low
 #SBATCH --time=60
 #SBATCH --mem=32000 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --partition=production
-#SBATCH --reservation=rnaworkshop
-#SBATCH --account=workshop
 #SBATCH --array=1-22
 #SBATCH --output=slurmout/star_%A_%a.out # File to which STDOUT will be written
 #SBATCH --error=slurmout/star_%A_%a.err # File to which STDERR will be written
@@ -17,7 +17,7 @@ echo $HOSTNAME
 echo "My SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
 
 sample=`sed "${SLURM_ARRAY_TASK_ID}q;d" samples.txt`
-REF="/share/workshop/mrnaseq_workshop/Data/star.overlap100.gencode.M35"
+REF="/quobyte/ikorfgrp/bis180l/mRNAseq/References/star.overlap100.gencode.M35"
 
 outpath='02-STAR_alignment'
 [[ -d ${outpath} ]] || mkdir ${outpath}
@@ -25,7 +25,7 @@ outpath='02-STAR_alignment'
 
 echo "SAMPLE: ${sample}"
 
-module load star
+module load star/2.7.11a
 
 call="STAR
      --runThreadN 8 \
