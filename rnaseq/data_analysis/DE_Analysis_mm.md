@@ -47,9 +47,14 @@ Together they allow fast, flexible, and powerful analyses of RNA-Seq data.  Limm
 
 ## 1. Read in the counts table and create our DGEList
 
+First you need to set your working directory in the Rstudio console.
 
-``` r
-counts <- read.delim("rnaseq_workshop_counts.txt", row.names = 1)
+```r
+setwd(paste0("/quobyte/ikorfgrp/bis180l/",Sys.getenv()["USER"],"/rnaseq_example/"))
+```
+
+```r
+counts <- read.delim("03-Counts/rnaseq_workshop_counts.txt", row.names = 1)
 head(counts)
 ```
 
@@ -125,18 +130,19 @@ A DGEList is an object in the package edgeR for storing count data, normalizatio
 
 
 ``` r
+library(edgeR)
 d0 <- DGEList(counts)
 ```
   
 **1a\.** Read in Annotation
 
 ``` r
-anno <- read.delim("ensembl_mm_112.txt",as.is=T)
+anno <- read.delim("ensembl_mm_114.txt",as.is=T)
 dim(anno)
 ```
 
 ```
-## [1] 149194     13
+## [1] 278369     13
 ```
 
 ``` r
@@ -144,41 +150,27 @@ head(anno)
 ```
 
 ```
-##       Gene.stable.ID Gene.stable.ID.version Transcript.stable.ID
-## 1 ENSMUSG00000064336   ENSMUSG00000064336.1   ENSMUST00000082387
-## 2 ENSMUSG00000064337   ENSMUSG00000064337.1   ENSMUST00000082388
-## 3 ENSMUSG00000064338   ENSMUSG00000064338.1   ENSMUST00000082389
-## 4 ENSMUSG00000064339   ENSMUSG00000064339.1   ENSMUST00000082390
-## 5 ENSMUSG00000064340   ENSMUSG00000064340.1   ENSMUST00000082391
-## 6 ENSMUSG00000064341   ENSMUSG00000064341.1   ENSMUST00000082392
-##   Transcript.stable.ID.version
-## 1         ENSMUST00000082387.1
-## 2         ENSMUST00000082388.1
-## 3         ENSMUST00000082389.1
-## 4         ENSMUST00000082390.1
-## 5         ENSMUST00000082391.1
-## 6         ENSMUST00000082392.1
-##                                                                  Gene.description
-## 1   mitochondrially encoded tRNA phenylalanine [Source:MGI Symbol;Acc:MGI:102487]
-## 2             mitochondrially encoded 12S rRNA [Source:MGI Symbol;Acc:MGI:102493]
-## 3          mitochondrially encoded tRNA valine [Source:MGI Symbol;Acc:MGI:102472]
-## 4             mitochondrially encoded 16S rRNA [Source:MGI Symbol;Acc:MGI:102492]
-## 5       mitochondrially encoded tRNA leucine 1 [Source:MGI Symbol;Acc:MGI:102482]
-## 6 mitochondrially encoded NADH dehydrogenase 1 [Source:MGI Symbol;Acc:MGI:101787]
-##   Chromosome.scaffold.name Gene.start..bp. Gene.end..bp. Strand Gene.name
-## 1                       MT               1            68      1     mt-Tf
-## 2                       MT              70          1024      1   mt-Rnr1
-## 3                       MT            1025          1093      1     mt-Tv
-## 4                       MT            1094          2675      1   mt-Rnr2
-## 5                       MT            2676          2750      1    mt-Tl1
-## 6                       MT            2751          3707      1    mt-Nd1
-##   Transcript.count Gene...GC.content      Gene.type
-## 1                1             30.88        Mt_tRNA
-## 2                1             35.81        Mt_rRNA
-## 3                1             39.13        Mt_tRNA
-## 4                1             35.40        Mt_rRNA
-## 5                1             44.00        Mt_tRNA
-## 6                1             37.62 protein_coding
+      Gene.stable.ID Gene.stable.ID.version Transcript.stable.ID Transcript.stable.ID.version
+1 ENSMUSG00000064336   ENSMUSG00000064336.1   ENSMUST00000082387         ENSMUST00000082387.1
+2 ENSMUSG00000064337   ENSMUSG00000064337.1   ENSMUST00000082388         ENSMUST00000082388.1
+3 ENSMUSG00000064338   ENSMUSG00000064338.1   ENSMUST00000082389         ENSMUST00000082389.1
+4 ENSMUSG00000064339   ENSMUSG00000064339.1   ENSMUST00000082390         ENSMUST00000082390.1
+5 ENSMUSG00000064340   ENSMUSG00000064340.1   ENSMUST00000082391         ENSMUST00000082391.1
+6 ENSMUSG00000064341   ENSMUSG00000064341.1   ENSMUST00000082392         ENSMUST00000082392.1
+                                                                 Gene.description Chromosome.scaffold.name
+1   mitochondrially encoded tRNA phenylalanine [Source:MGI Symbol;Acc:MGI:102487]                       MT
+2             mitochondrially encoded 12S rRNA [Source:MGI Symbol;Acc:MGI:102493]                       MT
+3          mitochondrially encoded tRNA valine [Source:MGI Symbol;Acc:MGI:102472]                       MT
+4             mitochondrially encoded 16S rRNA [Source:MGI Symbol;Acc:MGI:102492]                       MT
+5       mitochondrially encoded tRNA leucine 1 [Source:MGI Symbol;Acc:MGI:102482]                       MT
+6 mitochondrially encoded NADH dehydrogenase 1 [Source:MGI Symbol;Acc:MGI:101787]                       MT
+  Gene.start..bp. Gene.end..bp. Strand Gene.name Transcript.count Gene...GC.content      Gene.type
+1               1            68      1     mt-Tf                1             30.88        Mt_tRNA
+2              70          1024      1   mt-Rnr1                1             35.81        Mt_rRNA
+3            1025          1093      1     mt-Tv                1             39.13        Mt_tRNA
+4            1094          2675      1   mt-Rnr2                1             35.40        Mt_rRNA
+5            2676          2750      1    mt-Tl1                1             44.00        Mt_tRNA
+6            2751          3707      1    mt-Nd1                1             37.62 protein_coding
 ```
 
 ``` r
@@ -186,41 +178,34 @@ tail(anno)
 ```
 
 ```
-##            Gene.stable.ID Gene.stable.ID.version Transcript.stable.ID
-## 149189 ENSMUSG00000087600   ENSMUSG00000087600.3   ENSMUST00000150185
-## 149190 ENSMUSG00000025314  ENSMUSG00000025314.19   ENSMUST00000129323
-## 149191 ENSMUSG00000025314  ENSMUSG00000025314.19   ENSMUST00000111495
-## 149192 ENSMUSG00000025314  ENSMUSG00000025314.19   ENSMUST00000168621
-## 149193 ENSMUSG00000085471   ENSMUSG00000085471.2   ENSMUST00000126219
-## 149194 ENSMUSG00000085471   ENSMUSG00000085471.2   ENSMUST00000126953
-##        Transcript.stable.ID.version
-## 149189         ENSMUST00000150185.2
-## 149190         ENSMUST00000129323.2
-## 149191         ENSMUST00000111495.9
-## 149192         ENSMUST00000168621.5
-## 149193         ENSMUST00000126219.2
-## 149194         ENSMUST00000126953.2
-##                                                                                               Gene.description
-## 149189 prostate transmembrane protein, androgen induced 1, opposite strand [Source:MGI Symbol;Acc:MGI:3650161]
-## 149190                         protein tyrosine phosphatase receptor type J [Source:MGI Symbol;Acc:MGI:104574]
-## 149191                         protein tyrosine phosphatase receptor type J [Source:MGI Symbol;Acc:MGI:104574]
-## 149192                         protein tyrosine phosphatase receptor type J [Source:MGI Symbol;Acc:MGI:104574]
-## 149193     protein tyrosine phosphatase receptor type J, opposite strand 1 [Source:MGI Symbol;Acc:MGI:1918408]
-## 149194     protein tyrosine phosphatase receptor type J, opposite strand 1 [Source:MGI Symbol;Acc:MGI:1918408]
-##        Chromosome.scaffold.name Gene.start..bp. Gene.end..bp. Strand Gene.name
-## 149189                        2       173118467     173120221      1  Pmepa1os
-## 149190                        2        90260098      90410991     -1     Ptprj
-## 149191                        2        90260098      90410991     -1     Ptprj
-## 149192                        2        90260098      90410991     -1     Ptprj
-## 149193                        2        90309580      90318769      1  Ptprjos1
-## 149194                        2        90309580      90318769      1  Ptprjos1
-##        Transcript.count Gene...GC.content      Gene.type
-## 149189                2             50.48         lncRNA
-## 149190                3             45.73 protein_coding
-## 149191                3             45.73 protein_coding
-## 149192                3             45.73 protein_coding
-## 149193                2             46.65         lncRNA
-## 149194                2             46.65         lncRNA
+           Gene.stable.ID Gene.stable.ID.version Transcript.stable.ID Transcript.stable.ID.version
+278364 ENSMUSG00000081737   ENSMUSG00000081737.3   ENSMUST00000115977         ENSMUST00000115977.4
+278365 ENSMUSG00000081174   ENSMUSG00000081174.2   ENSMUST00000117541         ENSMUST00000117541.2
+278366 ENSMUSG00000083361   ENSMUSG00000083361.5   ENSMUST00000216706         ENSMUST00000216706.3
+278367 ENSMUSG00000083361   ENSMUSG00000083361.5   ENSMUST00000120704         ENSMUST00000120704.2
+278368 ENSMUSG00000124950   ENSMUSG00000124950.2   ENSMUST00000267036         ENSMUST00000267036.1
+278369 ENSMUSG00000124950   ENSMUSG00000124950.2   ENSMUST00000267037         ENSMUST00000267037.1
+                                                                                          Gene.description
+278364 olfactory receptor family 12 subfamily K member 6, pseudogene 1 [Source:MGI Symbol;Acc:MGI:3030193]
+278365                                            predicted gene 13439 [Source:MGI Symbol;Acc:MGI:3650780]
+278366               olfactory receptor family 12 subfamily K member 7 [Source:MGI Symbol;Acc:MGI:3030194]
+278367               olfactory receptor family 12 subfamily K member 7 [Source:MGI Symbol;Acc:MGI:3030194]
+278368                                                        novel transcript, antisense to RP23-458A10.2
+278369                                                        novel transcript, antisense to RP23-458A10.2
+       Chromosome.scaffold.name Gene.start..bp. Gene.end..bp. Strand  Gene.name Transcript.count
+278364                        2        36909283      36910208     -1 Or12k6-ps1                1
+278365                        2        36926036      36926444      1    Gm13439                1
+278366                        2        36955758      36959663      1     Or12k7                2
+278367                        2        36955758      36959663      1     Or12k7                2
+278368                        2        35257758      35277828      1                           2
+278369                        2        35257758      35277828      1                           2
+       Gene...GC.content              Gene.type
+278364             44.60 unprocessed_pseudogene
+278365             40.34   processed_pseudogene
+278366             36.00         protein_coding
+278367             36.00         protein_coding
+278368             41.84                 lncRNA
+278369             41.84                 lncRNA
 ```
 
 ``` r
@@ -288,29 +273,29 @@ d0$samples
 ```
 
 ```
-##                       group lib.size norm.factors
-## mouse_110_WT_C            1 12565440    1.0202749
-## mouse_110_WT_NC           1 19787656    0.9827710
-## mouse_148_WT_C            1 21828646    1.0191795
-## mouse_148_WT_NC           1 15167634    0.9727032
-## mouse_158_WT_C            1 29327303    0.9995372
-## mouse_158_WT_NC           1 17622133    0.9647970
-## mouse_183_KOMIR150_C      1  9985163    0.9993251
-## mouse_183_KOMIR150_NC     1  6346844    0.9541147
-## mouse_198_KOMIR150_C      1 19186734    0.9941313
-## mouse_198_KOMIR150_NC     1 22797451    0.9830820
-## mouse_206_KOMIR150_C      1  4305196    0.9607709
-## mouse_206_KOMIR150_NC     1  2723038    0.9130415
-## mouse_2670_KOTet3_C       1 27974927    1.0271513
-## mouse_2670_KOTet3_NC      1 24984193    0.9920584
-## mouse_7530_KOTet3_C       1 17057677    1.0301202
-## mouse_7530_KOTet3_NC      1 33965062    0.9940217
-## mouse_7531_KOTet3_C       1 23527065    1.0720990
-## mouse_7532_WT_NC          1 16036142    1.0174165
-## mouse_H510_WT_C           1 14306965    1.0706374
-## mouse_H510_WT_NC          1 18363234    1.0321657
-## mouse_H514_WT_C           1  8324060    1.0071358
-## mouse_H514_WT_NC          1 16538783    1.0074983
+                      group lib.size norm.factors
+mouse_110_WT_C            1  2306550    1.0257605
+mouse_110_WT_NC           1  2792660    0.9896077
+mouse_148_WT_C            1  2774208    1.0115271
+mouse_148_WT_NC           1  2572284    0.9881917
+mouse_158_WT_C            1  2928349    1.0015989
+mouse_158_WT_NC           1  2610362    0.9731433
+mouse_183_KOMIR150_C      1  2491757    1.0223133
+mouse_183_KOMIR150_NC     1  1831014    1.0051972
+mouse_198_KOMIR150_C      1  2804395    1.0096761
+mouse_198_KOMIR150_NC     1  2881646    0.9887322
+mouse_206_KOMIR150_C      1  1370405    1.0013014
+mouse_206_KOMIR150_NC     1   940196    0.9885350
+mouse_2670_KOTet3_C       1  2866082    0.9943276
+mouse_2670_KOTet3_NC      1  2894970    0.9773816
+mouse_7530_KOTet3_C       1  2574994    1.0195425
+mouse_7530_KOTet3_NC      1  2832431    0.9655963
+mouse_7531_KOTet3_C       1  2616165    1.0254253
+mouse_7532_WT_NC          1  2661119    1.0066529
+mouse_H510_WT_C           1  2542468    1.0229501
+mouse_H510_WT_NC          1  2784044    1.0168406
+mouse_H514_WT_C           1  2259390    0.9737118
+mouse_H514_WT_NC          1  2594451    0.9954800
 ```
 
 **Note:** calcNormFactors doesn't _normalize_ the data, it just calculates normalization factors for use downstream.
@@ -341,27 +326,20 @@ head(mm)
 ```
 
 ```
-##   groupKOMIR150.C groupKOTet3.C groupWT.C groupKOMIR150.NC groupKOTet3.NC
-## 1               0             0         1                0              0
-## 2               0             0         0                0              0
-## 3               0             0         1                0              0
-## 4               0             0         0                0              0
-## 5               0             0         1                0              0
-## 6               0             0         0                0              0
-##   groupWT.NC mouse148 mouse158 mouse183 mouse198 mouse206 mouse2670 mouse7530
-## 1          0        0        0        0        0        0         0         0
-## 2          1        0        0        0        0        0         0         0
-## 3          0        1        0        0        0        0         0         0
-## 4          1        1        0        0        0        0         0         0
-## 5          0        0        1        0        0        0         0         0
-## 6          1        0        1        0        0        0         0         0
-##   mouse7531 mouse7532 mouseH510 mouseH514
-## 1         0         0         0         0
-## 2         0         0         0         0
-## 3         0         0         0         0
-## 4         0         0         0         0
-## 5         0         0         0         0
-## 6         0         0         0         0
+  groupKOMIR150.C groupKOTet3.C groupWT.C groupKOMIR150.NC groupKOTet3.NC groupWT.NC mouse148 mouse158
+1               0             0         1                0              0          0        0        0
+2               0             0         0                0              0          1        0        0
+3               0             0         1                0              0          0        1        0
+4               0             0         0                0              0          1        1        0
+5               0             0         1                0              0          0        0        1
+6               0             0         0                0              0          1        0        1
+  mouse183 mouse198 mouse206 mouse2670 mouse7530 mouse7531 mouse7532 mouseH510 mouseH514
+1        0        0        0         0         0         0         0         0         0
+2        0        0        0         0         0         0         0         0         0
+3        0        0        0         0         0         0         0         0         0
+4        0        0        0         0         0         0         0         0         0
+5        0        0        0         0         0         0         0         0         0
+6        0        0        0         0         0         0         0         0         0
 ```
 
 
@@ -371,7 +349,7 @@ sum(keep) # number of genes retained
 ```
 
 ```
-## [1] 16093
+## [1] 11730
 ```
 
 ``` r
@@ -1682,7 +1660,7 @@ vennDiagram(results, names = c("C", "NC"), main = "DE Genes Between KOMIR150 and
 ## Download the Enrichment Analysis R Markdown document
 
 ``` r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2023-June-RNA-Seq-Analysis/master/data_analysis/enrichment_mm.Rmd", "enrichment_mm.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/master/rnaseq/data_analysis/enrichment_mm.Rmd", "enrichment_mm.Rmd")
 ```
 
 

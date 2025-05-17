@@ -27,16 +27,16 @@ In this section, we will collate all of the count data into one file for analysi
     head 02-STAR_alignment/mouse_110_WT_C/mouse_110_WT_C_ReadsPerGene.out.tab
     ```
 
-    <div class="output"> N_unmapped	215558	215558	215558
-    N_multimapping	106596	106596	106596
-    N_noFeature	364255	2649569	377560
-    N_ambiguous	109260	696	46009
-    ENSMUSG00000102693.2	0	0	0
-    ENSMUSG00000064842.3	0	0	0
-    ENSMUSG00000051951.6	0	0	0
-    ENSMUSG00000102851.2	0	0	0
-    ENSMUSG00000103377.2	0	0	0
-    ENSMUSG00000104017.2	0	0	0
+    <div class="output"> N_unmapped 215559  215559  215559
+N_multimapping  106588  106588  106588
+N_noFeature 354325  2570556 370887
+N_ambiguous 187028  2188    50143
+ENSMUSG00000102693.2    0   0   0
+ENSMUSG00000064842.3    0   0   0
+ENSMUSG00000051951.6    0   0   0
+ENSMUSG00000102851.2    0   0   0
+ENSMUSG00000103377.2    0   0   0
+ENSMUSG00000104017.2    0   0   0
     </div>
 
     The columns are ID, reads map to either strand, reads mapped to forward strand, and reads mapped to the reverse strand and the first four lines are category totals. In this experiment, it looks like the reads are from the reverse strand, due to the much higher mapping numbers in that column and they similar to reads mapped to either strands. So what we want is just that column of numbers (minus the first four lines), for every one of these files.

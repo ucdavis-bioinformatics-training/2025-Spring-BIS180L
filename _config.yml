@@ -90,8 +90,8 @@ navigation:
     url: rnaseq/data_analysis/DE_Analysis_mm_with_quizzes
   - title: Pathway Analysis
     url: rnaseq/data_analysis/enrichment_mm_with_quizzes
-  - title: Comparison between STAR and Salmon
-    url: rnaseq/data_analysis/compare_star_salmon_mm
+  # - title: Comparison between STAR and Salmon
+  #   url: rnaseq/data_analysis/compare_star_salmon_mm
 
 
 

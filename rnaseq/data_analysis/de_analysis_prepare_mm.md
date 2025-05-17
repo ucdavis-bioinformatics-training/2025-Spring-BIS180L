@@ -63,40 +63,36 @@ if (!any(rownames(installed.packages()) == "ggplot2")){
 library(ggplot2)
 
 
-if (!any(rownames(installed.packages()) == "devtools")){
-  BiocManager::install("devtools")
+if (!any(rownames(installed.packages()) == "pathview")){
+    BiocManager::install("pathview")
 }
-library(devtools)
-
-devtools::install_github("javadnoorb/pathview")
-```
-
-Note about pathview: As of June 2022, the version of pathview on Bioconductor is (presumably temporarily) broken due to KEGG's move from http to https. Therefore, the instructions above install a patched version of pathview from Github.  
+library(pathview)
+``` 
 
 ## Download the template Markdown workshop document and open it
 
 In the R console run the following command
 
 ```r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2024-June-RNA-Seq-Analysis/master/data_analysis/DE_Analysis_mm.Rmd", "DE_Analysis_mm.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/master/rnaseq/data_analysis/DE_Analysis_mm.Rmd", "DE_Analysis_mm.Rmd")
 ```
 
 ## Download the data file for the workshop document and preview/open it
 
-This is the the counts file generated after running [Generating counts tables](https://ucdavis-bioinformatics-training.github.io/2023-June-RNA-Seq-Analysis/data_reduction/counts).
+<!-- This is the the counts file generated after running [Generating counts tables](https://ucdavis-bioinformatics-training.github.io/2023-June-RNA-Seq-Analysis/data_reduction/counts).
 
 I've also uploaded to the github repo. In the R console run the following command.
 ```r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2024-June-RNA-Seq-Analysis/master/datasets/rnaseq_workshop_counts.txt", "rnaseq_workshop_counts.txt")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/master/rnaseq/datasets/rnaseq_workshop_counts.txt", "rnaseq_workshop_counts.txt")
 ```
-
+ -->
 ```r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2024-June-RNA-Seq-Analysis/master/datasets/ensembl_mm_112.txt", "ensembl_mm_112.txt")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/master/rnaseq/datasets/ensembl_mm_112.txt", "ensembl_mm_112.txt")
 ```
 
-#### For the salmon datasets
+<!-- #### For the salmon datasets -->
 
-```r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2024-June-RNA-Seq-Analysis/master/datasets/rnaseq_salmon_workshop_counts.txt", "rnaseq_salmon_workshop_counts.txt")
-```
+<!-- ```r
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/master/rnaseq/datasets/rnaseq_salmon_workshop_counts.txt", "rnaseq_salmon_workshop_counts.txt")
+``` -->
 
