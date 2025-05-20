@@ -67,9 +67,8 @@ To double check, we could map reads to a "housekeeping gene" like beta actin (NM
 ### An RNAseq Preprocessing Workflow
 
 1. Remove contaminants (at least PhiX).
-1. Remove PCR duplicates.
 1. Count rRNA proportion.
-1. Join and potentially extend, overlapping paired end reads
+1. Remove PCR duplicates.
 1. If reads completely overlap they will contain adapter, remove adapters
 1. Identify and remove any adapter dimers present
 1. Trim sequences (5’ and 3’) by quality score (I like Q20)
@@ -121,6 +120,7 @@ HTStream includes the following applications:
 
 hts_AdapterTrimmer: Identify and remove adapter sequences.  
 hts_CutTrim: Discreet 5' and/or 3' basepair trimming.  
+hts_ExtractUMI: Extract UMI sequences.   
 hts_LengthFilter: Remove reads outside of min and/or max length.  
 hts_NTrimmer: Extract the longest subsequence with no Ns.    
 hts_Overlapper: Overlap paired end reads, removing adapters when present.  
@@ -196,7 +196,7 @@ When building a new pipeline, it is almost always a good idea to use a small sub
     hts_Stats --help
     ```
 
-    * *What version of hts_Stats is loaded? (v1.3.3)*
+    * *What version of hts_Stats is loaded? (v1.4.1)*
 
 
 1. Now lets run ```hts_Stats``` and look at the output.
@@ -413,17 +413,12 @@ Many other read de-duplication algorithms rely on mapping position to identify d
 
 However, this approach requires that there be a reference to map reads against and requires that someone maps the reads first!
 
-hts_SuperDeduper does not require a reference or mapped reads. Instead it uses a small portion of each paired read to identify duplicates. If an identical pattern is identified in multiple reads, extra copies are discarded.
+hts_SuperDeduper does not require a reference or mapped reads. Instead it uses a small portion of each paired read to identify duplicates (in order to avoid the often lower-quality region in the first ~10bp of Illumina Read1, hts_SuperDeduper uses a default start position of basepair 10 and a length of 10bp). If an identical pattern is identified in multiple reads, extra copies are discarded.
 
 
 <img src="preproc_mm_figures/SD_eval.png" alt="SD_eval" width="80%"/>
 
-This table compares the performance of SuperDeduper against some other duplicate removal algorithms. Two data sets were tested, PhiX spike in reads and reads from *Acropora digitifera* (a type of coral). The number of unique reads identified is listed along with the percentage of duplicates not reported by other tools in parentheses. SuperDeduper performance is similar to other mapping based deduplication tools (MarkDuplicates and Rmdup), however it identifies slightly more unique reads (in some cases these were unmapped reads, in other cases reads with sequencing errors in the key region). FastUniq and Fulcrum are two other tools that do not rely on mapping. They identified a much larger set of reads as being unique.
-
-
-<img src="preproc_mm_figures/SD_performance.png" alt="SD_performance" width="80%"/>
-
-We calculated the Youden Index for every combination tested (using results from Picard MarkDuplicates as ground truth). The point that acquired the highest index value occurred at a start position of 5 and a length of 10bp (20bp total over both reads). However in order to avoid the often lower-quality region in the first ~10bp of Illumina Read1, hts_SuperDeduper uses a default start position of basepair 10 and a length of 10bp.
+You can read the SuperDeduper paper [here](https://dl.acm.org/doi/10.1145/2808719.2811568).
 
 ------
 
@@ -545,7 +540,7 @@ Note the patterns:
 * All other parameters are algorithm specific, can review using --help
 
 **Questions**
-* *Review the final json output, how many reads do we have left? (74237)*
+* *Review the final json output, how many reads do we have left? (74234)*
 
 * *Confirm that number by counting the number of reads in the final output files.*
 
