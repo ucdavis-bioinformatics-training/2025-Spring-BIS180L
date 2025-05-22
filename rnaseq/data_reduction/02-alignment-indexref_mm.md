@@ -5,7 +5,7 @@
 
     ```bash
     cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example
-    mkdir -p slurmout
+    mkdir -p References
     ```
 
 1. To align our data we will need the genome (fasta) and annotation (gtf) for mouse. There are many places to find them, but we are going to get them from the [GENCODE](https://www.gencodegenes.org/mouse/).
@@ -49,7 +49,7 @@
     less star_index.slurm
     ```
 
-    <pre class="prettyprint"><code class="language-py" style="background-color:333333">#!/bin/bash
+<div class="script">#!/bin/bash
 #SBATCH --job-name=star_index # Job name
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
@@ -90,7 +90,7 @@ eval $call
 end=`date +%s`
 runtime=$((end-start))
 echo $runtime
-    </code></pre>
+</div>
 
     When you are done, type "q" to exit.
 
