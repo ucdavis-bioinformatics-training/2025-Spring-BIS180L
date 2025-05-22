@@ -92,15 +92,14 @@ runtime=$((end-start))
 echo $runtime
 </div>
 
-    When you are done, type "q" to exit.
+When you are done, type "q" to exit.
 
-    * This script creates the star index directory (star.overlap100.gencode.M35).
-    * Changes directory into the new star index directory. We run the star indexing command from inside the directory, for some reason star fails if you try to run it outside this directory.
-    * Finally, runs star in mode genomeGenerate.
+* This script creates the star index directory (star.overlap100.gencode.M35).
+* Changes directory into the new star index directory. We run the star indexing command from inside the directory, for some reason star fails if you try to run it outside this directory.
+* Finally, runs star in mode genomeGenerate.
 
 
-
-1. Unzip the genome and annotation files and add your Reference directory to the script. Then run star indexing when ready.
+Unzip the genome and annotation files and add your Reference directory to the script. Then run star indexing when ready.
 
 ```bash
 cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example 
