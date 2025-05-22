@@ -100,7 +100,7 @@ When you are done, type "q" to exit.
 
 
 
-Unzip the genome and annotation files and add your Reference directory to the script. Then run star indexing when ready.
+1. Unzip the genome and annotation files and add your Reference directory to the script. Then run star indexing when ready.
 
 ```bash
 cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example 
