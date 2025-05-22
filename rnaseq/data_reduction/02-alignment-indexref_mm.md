@@ -92,11 +92,11 @@ runtime=$((end-start))
 echo $runtime
 </div>
 
-When you are done, type "q" to exit.
+    When you are done, type "q" to exit.
 
-* This script creates the star index directory (star.overlap100.gencode.M35).
-* Changes directory into the new star index directory. We run the star indexing command from inside the directory, for some reason star fails if you try to run it outside this directory.
-* Finally, runs star in mode genomeGenerate.
+    * This script creates the star index directory (star.overlap100.gencode.M35).
+    * Changes directory into the new star index directory. We run the star indexing command from inside the directory, for some reason star fails if you try to run it outside this directory.
+    * Finally, runs star in mode genomeGenerate.
 
 
 
