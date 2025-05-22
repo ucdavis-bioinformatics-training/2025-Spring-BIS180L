@@ -102,16 +102,16 @@ When you are done, type "q" to exit.
 
 Unzip the genome and annotation files and add your Reference directory to the script. Then run star indexing when ready.
 
-    ```bash
-    cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example 
-    sbatch star_index.slurm
-    ```
+```bash
+cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example 
+sbatch star_index.slurm
+```
 
-    This step will take a couple of hours. You can look at the [STAR documentation](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf) while you wait. All of the output files will be written to the star index directory **star.overlap100.gencode.M35**.
+This step will take a couple of hours. You can look at the [STAR documentation](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf) while you wait. All of the output files will be written to the star index directory **star.overlap100.gencode.M35**.
 
-    **IF For the sake of time, or for some reason it didn't finish, is corrupted, or you missed the session, you can link over a completed copy.** If the indexing job is still running, it should be canceled first.
+**IF For the sake of time, or for some reason it didn't finish, is corrupted, or you missed the session, you can link over a completed copy.** If the indexing job is still running, it should be canceled first.
 
-    ```bash
-    cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example/References
-    ln -s /quobyte/ikorfgrp/bis180l/najoshi/mRNAseq/References/star.overlap100.gencode.M35 .
-    ```
+```bash
+cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example/References
+ln -s /quobyte/ikorfgrp/bis180l/najoshi/mRNAseq/References/star.overlap100.gencode.M35 .
+```
