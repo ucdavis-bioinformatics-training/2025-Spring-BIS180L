@@ -277,6 +277,8 @@ What does stranded and unstranded mean? Which is better and why? [Stranded vs Un
 - work through QA/QC of the experiment
 - complete the questions at the end
 
+
+
 1. We can now run STAR across all samples on the real data using a SLURM script, [star.slurm](../scripts/star.slurm), that we should take a look at now.
 
 ```bash
