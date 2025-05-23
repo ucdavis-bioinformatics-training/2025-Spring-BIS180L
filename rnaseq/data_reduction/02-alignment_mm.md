@@ -355,7 +355,7 @@ squeue -u $USER
 
 Once your jobs have finished successfully, check the error and out logs like we did in the previous exercise.
 
-  Use a script of ours, [star_stats.R](../software_scripts/scripts/star_stats.R) to collect the alignment stats.
+Use a script of ours, [star_stats.R](../software_scripts/scripts/star_stats.R) to collect the alignment stats.
 
 ```bash
 cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example # We'll run this from the main directory
@@ -364,7 +364,7 @@ module load R
 Rscript star_stats.R
 ```
 
-    <pre class="prettyprint"><code class="language-r" style="background-color:333333">
+<pre class="prettyprint"><code class="language-r" style="background-color:333333">
 files = Sys.glob("02-STAR_alignment/*/*_ReadsPerGene.out.tab")
 stats = t(as.data.frame(lapply(files, function(x){read.delim(x,header=F,nrows=4)[,4]})))
 samples=read.delim("samples.txt",header=F)
@@ -374,7 +374,7 @@ colnames(stats) = cn
 stats = cbind(stats,total_in_feature=rowSums(stats))
 stats = cbind(sample=rownames(stats), stats)
 write.table(stats, file="summary_star_alignments.txt", col.names=T, row.names=F, quote=F, sep="\t")
-    </code></pre>
+</code></pre>
 
 
 **Questions:**
