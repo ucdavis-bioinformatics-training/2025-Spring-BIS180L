@@ -285,7 +285,7 @@ What does stranded and unstranded mean? Which is better and why? [Stranded vs Un
     less star.slurm
     ```
 
-    <pre class="prettyprint"><code class="language-py" style="background-color:333333">#!/bin/bash
+<pre class="script">#!/bin/bash
 
 #SBATCH --job-name=star # Job name
 #SBATCH --nodes=1
@@ -330,12 +330,11 @@ eval $call
 end=`date +%s`
 runtime=$((end-start))
 echo $runtime
-    </code></pre>
+</pre>
 
 
 When you are done, type "q" to exit.
 
-{:start="2"}
 2. After looking at the script, lets run it.
 
     ```bash
