@@ -279,10 +279,10 @@ What does stranded and unstranded mean? Which is better and why? [Stranded vs Un
 
 1. We can now run STAR across all samples on the real data using a SLURM script, [star.slurm](../scripts/star.slurm), that we should take a look at now.
 
-    ```bash
-    cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example  # We'll run this from the main directory
-    wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/master/rnaseq/software_scripts/scripts/star.slurm
-    less star.slurm
+```bash
+cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example  # We'll run this from the main directory
+wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/master/rnaseq/software_scripts/scripts/star.slurm
+less star.slurm
     ```
 
 <div class="script">#!/bin/bash
@@ -335,17 +335,17 @@ echo $runtime
 
 When you are done, type "q" to exit.
 
-1. After looking at the script, lets run it.
+2. After looking at the script, lets run it.
 
-    ```bash
-    sbatch star.slurm  # moment of truth!
-    ```
+```bash
+sbatch star.slurm  # moment of truth!
+```
 
-    We can watch the progress of our task array using the 'squeue' command. Takes about 2 minutes to process each sample.
+We can watch the progress of our task array using the 'squeue' command. Takes about 2 minutes to process each sample.
 
-    ```sbatch
-    squeue -u $USER 
-    ```
+```sbatch
+squeue -u $USER 
+```
 
 
 ---
