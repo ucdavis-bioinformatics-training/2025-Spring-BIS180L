@@ -353,7 +353,7 @@ squeue -u $USER
 ---
 ## Quality Assurance - Mapping statistics as QA/QC.
 
-1. Once your jobs have finished successfully, check the error and out logs like we did in the previous exercise.
+Once your jobs have finished successfully, check the error and out logs like we did in the previous exercise.
 
     Use a script of ours, [star_stats.R](../software_scripts/scripts/star_stats.R) to collect the alignment stats.
 
