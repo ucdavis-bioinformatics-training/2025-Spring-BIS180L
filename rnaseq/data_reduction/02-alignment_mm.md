@@ -279,7 +279,7 @@ What does stranded and unstranded mean? Which is better and why? [Stranded vs Un
 
 
 
-We can now run STAR across all samples on the real data using a SLURM script, [star.slurm](../scripts/star.slurm), that we should take a look at now.
+We can now run STAR across all samples on the real data using a SLURM script, [star.slurm](../software_scripts/scripts/star.slurm), that we should take a look at now.
 
 ```bash
 cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example  # We'll run this from the main directory
@@ -355,14 +355,14 @@ squeue -u $USER
 
 Once your jobs have finished successfully, check the error and out logs like we did in the previous exercise.
 
-    Use a script of ours, [star_stats.R](../software_scripts/scripts/star_stats.R) to collect the alignment stats.
+  Use a script of ours, [star_stats.R](../software_scripts/scripts/star_stats.R) to collect the alignment stats.
 
-    ```bash
-    cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example # We'll run this from the main directory
-    wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/master/rnaseq/software_scripts/scripts/star_stats.R
-    module load R
-    Rscript star_stats.R
-    ```
+```bash
+cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example # We'll run this from the main directory
+wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/master/rnaseq/software_scripts/scripts/star_stats.R
+module load R
+Rscript star_stats.R
+```
 
     <pre class="prettyprint"><code class="language-r" style="background-color:333333">
 files = Sys.glob("02-STAR_alignment/*/*_ReadsPerGene.out.tab")
