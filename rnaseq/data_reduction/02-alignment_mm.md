@@ -335,7 +335,7 @@ echo $runtime
 
 When you are done, type "q" to exit.
 
-2. After looking at the script, lets run it.
+1. After looking at the script, lets run it.
 
     ```bash
     sbatch star.slurm  # moment of truth!
