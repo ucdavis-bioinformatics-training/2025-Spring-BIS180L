@@ -283,7 +283,7 @@ What does stranded and unstranded mean? Which is better and why? [Stranded vs Un
 cd /quobyte/ikorfgrp/bis180l/$USER/rnaseq_example  # We'll run this from the main directory
 wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-Spring-BIS180L/master/rnaseq/software_scripts/scripts/star.slurm
 less star.slurm
-    ```
+```
 
 <div class="script">#!/bin/bash
 
