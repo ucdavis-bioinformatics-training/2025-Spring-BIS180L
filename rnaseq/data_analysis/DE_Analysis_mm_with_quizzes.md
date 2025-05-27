@@ -356,7 +356,7 @@ myQuestions1 = [
     question: "How many genes are in the counts table",
     answers: {
       a: "22",
-      b: "57,132",
+      b: "78,258",
       c: "382,721,346",
     },
     correctAnswer: "b"
@@ -365,7 +365,7 @@ myQuestions1 = [
     question: "How many samples are in the counts table",
     answers: {
       a: "22",
-      b: "57,132",
+      b: "78,258",
       c: "382,721,346",
     },
     correctAnswer: "a"
@@ -375,7 +375,7 @@ myQuestions1 = [
     answers: {
       a: "10,000",
       b: "19,787,656",
-      c: "12,565,440"
+      c: "2,306,550"
     },
     correctAnswer: "c"
   },
@@ -546,9 +546,9 @@ myQuestions2 = [
     answers: {
       a: "mouse_206_KOMIR150_NC",
       b: "mouse_7531_KOTet3_C",
-      c: "mouse_148_WT_C",
+      c: "mouse_110_WT_C",
     },
-    correctAnswer: "b"
+    correctAnswer: "c"
   },
   {
     question: "Is the sample with the largest normalization factor the sample with the smallest total counts?",
